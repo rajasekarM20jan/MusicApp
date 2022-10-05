@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         seeker=(SeekBar) findViewById(R.id.seekbar);
         initTiming=(TextView) findViewById(R.id.init);
         finalTiming=(TextView) findViewById(R.id.last);
-        myMusic=MediaPlayer.create(this,R.raw.hrudayake_hedarike);
+        myMusic=MediaPlayer.create(this,R.raw.nenu_nuvvantu);
         pause.setEnabled(false);
         seeker.setClickable(false);
         MainActivity.this.runOnUiThread(new Runnable() {
