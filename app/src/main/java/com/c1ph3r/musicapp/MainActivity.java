@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pause=(Button) findViewById(R.id.pause);
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         seeker=(SeekBar) findViewById(R.id.seekbar);
         initTiming=(TextView) findViewById(R.id.init);
         finalTiming=(TextView) findViewById(R.id.last);
-        myMusic=MediaPlayer.create(this,R.raw.mallipoo);
+        myMusic=MediaPlayer.create(this,R.raw.gamanisu);
         pause.setEnabled(false);
         seeker.setClickable(false);
         MainActivity.this.runOnUiThread(new Runnable() {
