@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pause=(Button) findViewById(R.id.pause);
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         seeker=(SeekBar) findViewById(R.id.seekbar);
         initTiming=(TextView) findViewById(R.id.init);
         finalTiming=(TextView) findViewById(R.id.last);
-        myMusic=MediaPlayer.create(this,R.raw.nenu_nuvvantu);
+        myMusic=MediaPlayer.create(this,R.raw.mallipoo);
         pause.setEnabled(false);
         seeker.setClickable(false);
         MainActivity.this.runOnUiThread(new Runnable() {
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 myMusic.start();
                 play.setEnabled(false);
                 pause.setEnabled(true);
+                Toast.makeText(MainActivity.this,"Playing",Toast.LENGTH_SHORT).show();
                 seeker.setProgress(0);
                 seeker.setMax(myMusic.getDuration());
                 finalTiming.setText(conversion(String.valueOf(myMusic.getDuration())));
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 myMusic.pause();
                 play.setEnabled(true);
                 pause.setEnabled(false);
+                Toast.makeText(MainActivity.this,"Paused",Toast.LENGTH_SHORT).show();
             }
         });
         forward.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
     }
     static String conversion(String duration){
         long m=Long.parseLong(duration);
-        return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(m)%TimeUnit.HOURS.toMinutes(1),TimeUnit.MILLISECONDS.toSeconds(m)%TimeUnit.MINUTES.toSeconds(1));
+        return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(m)%TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(m)%TimeUnit.MINUTES.toSeconds(1));
     }
 
 }
