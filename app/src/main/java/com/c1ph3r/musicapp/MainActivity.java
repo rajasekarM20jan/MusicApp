@@ -23,6 +23,7 @@ import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
+    //Declaring the variables for Main activity
     Button pause,forward,rewind,play;
     TextView initTiming,finalTiming;
     ImageView imgview;
@@ -30,12 +31,11 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer myMusic,music;
     int forwardtime=5000;
     int reversetime=5000;
-    double startTime=0;
-    double finalTime=0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        //defining the usage for the variables created globally.
+        //In this method we are going to comprise the actions to be done for the music application.
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); // Making orientation without sensor so it will help in avoiding restart of the layout.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pause=(Button) findViewById(R.id.pause);
@@ -46,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
         seeker=(SeekBar) findViewById(R.id.seekbar);
         initTiming=(TextView) findViewById(R.id.init);
         finalTiming=(TextView) findViewById(R.id.last);
-        myMusic=MediaPlayer.create(this,R.raw.manavalan_thug);
+        myMusic=MediaPlayer.create(this,R.raw.manavalan_thug); // setting a song for this(present) activity in media player
         pause.setEnabled(false);
         seeker.setClickable(false);
+        //used for setting seekbar's progress and song's current timing detector
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -57,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
                     initTiming.setText(conversion(String.valueOf(myMusic.getCurrentPosition())));
                     imgview.setRotation(imgview.getRotation()+5);
                 }
-                new Handler().postDelayed(this,100);
+                new Handler().postDelayed(this,300); //using handler method for delaying the runnable method for 300-milliSeconds
             }
         });
+        //Button play's actions
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,9 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"Playing",Toast.LENGTH_SHORT).show();
                 seeker.setProgress(0);
                 seeker.setMax(myMusic.getDuration());
-                finalTiming.setText(conversion(String.valueOf(myMusic.getDuration())));
+                finalTiming.setText(conversion(String.valueOf(myMusic.getDuration())));// usage of method conversion
                }
         });
+        //Button pause's actions
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,12 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"Paused",Toast.LENGTH_SHORT).show();
             }
         });
+        //Button forward's actions
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 myMusic.seekTo(myMusic.getCurrentPosition()+forwardtime);
             }
         });
+        //Button rewind's actions
         rewind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    //method created for converting the format of the duration captured...
+    // ...from media player into human readable(milliseconds into Minutes and Seconds)
     static String conversion(String duration){
         long m=Long.parseLong(duration);
         return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(m)%TimeUnit.HOURS.toMinutes(1),
