@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         seeker=(SeekBar) findViewById(R.id.seekbar);
         initTiming=(TextView) findViewById(R.id.init);
         finalTiming=(TextView) findViewById(R.id.last);
-        myMusic=MediaPlayer.create(this,R.raw.gamanisu);
+        myMusic=MediaPlayer.create(this,R.raw.manavalan_thug);
         pause.setEnabled(false);
         seeker.setClickable(false);
         MainActivity.this.runOnUiThread(new Runnable() {
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 new Handler().postDelayed(this,100);
             }
-
         });
         play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,12 +90,9 @@ public class MainActivity extends AppCompatActivity {
         rewind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myMusic.seekTo(myMusic.getCurrentPosition()-forwardtime);
+                myMusic.seekTo(myMusic.getCurrentPosition()-reversetime);
             }
         });
-
-
-
     }
     static String conversion(String duration){
         long m=Long.parseLong(duration);
